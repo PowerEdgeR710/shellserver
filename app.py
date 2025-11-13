@@ -1,19 +1,23 @@
 import sys
 import subprocess
+import importlib
 
-# ensure paramiko is installed using pip3
-try:
-    import paramiko
-except ImportError:
-    print("paramiko not found | installing via pip3...")
-    subprocess.check_call(["pip3", "install", "paramiko"])
-    import paramiko
+# ensure stuff is installed using pip3
+def ensure_package(pkg):
+    try:
+        return importlib.import_module(pkg)
+    except ImportError:
+        print(f"{pkg} not found — installing via pip3...")
+        subprocess.check_call(["pip3", "install", pkg])
+        return importlib.import_module(pkg)
+
+paramiko = ensure_package("paramiko")
+requests = ensure_package("requests")
 
 import os
 import termios
 import tty
 import select
-import requests
 
 VPS_API_BASE = "https://vps-api.5136.cloud"
 VPS_TOKEN = os.getenv("VPS_TOKEN")
