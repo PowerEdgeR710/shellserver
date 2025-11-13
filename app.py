@@ -7,7 +7,17 @@ import select
 import requests
 
 VPS_API_BASE = "https://vps-api.5136.cloud"
-VPS_TOKEN = os.getenv("TOKEN")  # set this in Pterodactyl env lmao
+VPS_TOKEN = os.getenv("VPS_TOKEN")  # set this in Pterodactyl env lmao
+
+def call_start():
+    headers = {"Authorization": VPS_TOKEN}
+    try:
+        resp = requests.post(f"{VPS_API_BASE}/manage/start", headers=headers)
+        resp.raise_for_status()
+        print("Starting the VPS.")
+    except Exception as e:
+        print("Failed to start VPS:", e)
+        sys.exit(1)
 
 def get_ssh_info():
     headers = {"Authorization": VPS_TOKEN}
@@ -42,6 +52,7 @@ def interactive_shell(chan):
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_tty)
 
 def main():
+    call_start()
     ssh_info = get_ssh_info()
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
