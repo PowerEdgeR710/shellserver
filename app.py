@@ -1,5 +1,14 @@
-import paramiko
 import sys
+import subprocess
+
+# ensure paramiko is installed using pip3
+try:
+    import paramiko
+except ImportError:
+    print("paramiko not found | installing via pip3...")
+    subprocess.check_call(["pip3", "install", "paramiko"])
+    import paramiko
+
 import os
 import termios
 import tty
@@ -7,7 +16,7 @@ import select
 import requests
 
 VPS_API_BASE = "https://vps-api.5136.cloud"
-VPS_TOKEN = os.getenv("VPS_TOKEN")  # set this in Pterodactyl env lmao
+VPS_TOKEN = os.getenv("VPS_TOKEN")
 
 def call_start():
     headers = {"Authorization": VPS_TOKEN}
@@ -30,7 +39,6 @@ def interactive_shell(chan):
     try:
         tty.setraw(sys.stdin.fileno())
         chan.settimeout(0.0)
-
         while True:
             r, w, e = select.select([chan, sys.stdin], [], [])
             if chan in r:
