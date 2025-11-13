@@ -77,6 +77,13 @@ def main():
         sys.exit(1)
     chan = client.invoke_shell()
     print("Successfully connected to this VPS(s) shell.")
+    print("")
+    print("To use SSHX instead of this panel, run this command:")
+    print("curl -sSf https://sshx.io/get | sh")
+    print("")
+    print("Also stopping the server will also stop SSHX If running!")
+    print("Please don't use kill unless It's really hung. If it hung but you were in micro, try using 'poweroff -f'.")
+    print("")
     print("/ # ")
     interactive_shell(chan)
 
