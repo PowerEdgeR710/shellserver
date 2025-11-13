@@ -20,7 +20,7 @@ import tty
 import select
 
 VPS_API_BASE = "https://vps-api.5136.cloud"
-VPS_TOKEN = os.getenv("VPS_TOKEN")
+VPS_TOKEN = os.getenv("TOKEN")
 
 def call_start():
     headers = {"Authorization": VPS_TOKEN}
