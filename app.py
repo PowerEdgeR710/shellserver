@@ -1,3 +1,6 @@
+print("\033[H\033[J", end="")
+print("")
+print("Console has been started, please wait.")
 import sys
 import subprocess
 import importlib
@@ -76,14 +79,16 @@ def main():
         print("SSH connection failed:", e)
         sys.exit(1)
     chan = client.invoke_shell()
+    print("\033[H\033[J", end="")
     print("Successfully connected to this VPS(s) shell.")
-    print("")
+    print("\n")
     print("To use SSHX instead of this panel, run this command:")
     print("curl -sSf https://sshx.io/get | sh")
-    print("")
+    print("\n")
     print("Also stopping the server will also stop SSHX If running!")
     print("Please don't use kill unless It's really hung. If it hung but you were in micro, try using 'poweroff -f'.")
-    print("")
+    print("\n")
+    print("Have fun with your VPS on 5136.cloud.\n")
     print("/ # ")
     interactive_shell(chan)
 
