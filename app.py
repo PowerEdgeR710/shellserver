@@ -1,6 +1,9 @@
 print("\033[H\033[J", end="")
 print("")
 print("Console has been started, please wait.")
+print("")
+print("")
+print("Process:")
 import sys
 import subprocess
 import importlib
@@ -26,6 +29,7 @@ VPS_API_BASE = "https://vps-api.5136.cloud"
 VPS_TOKEN = os.getenv("TOKEN")
 
 def call_start():
+    print("1 - Starting VPS.")
     headers = {"Authorization": VPS_TOKEN}
     try:
         requests.post(f"{VPS_API_BASE}/manage/start", headers=headers)
@@ -33,6 +37,7 @@ def call_start():
         pass
 
 def get_ssh_info():
+    print("2 - Getting SSH Info")
     headers = {"Authorization": VPS_TOKEN}
     resp = requests.get(f"{VPS_API_BASE}/manage/sshinfo", headers=headers)
     resp.raise_for_status()
@@ -66,6 +71,7 @@ def interactive_shell(chan):
 def main():
     call_start()
     ssh_info = get_ssh_info()
+    print("3 - Getting into the server")
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     try:
@@ -80,13 +86,17 @@ def main():
         sys.exit(1)
     chan = client.invoke_shell()
     print("\033[H\033[J", end="")
-    print("Successfully connected to this VPS(s) shell.")
+    print("\n")
+    print("Successfully connected to this server's shell.")
+    print("\n")
     print("\n")
     print("To use SSHX instead of this panel, run this command:")
     print("curl -sSf https://sshx.io/get | sh")
     print("\n")
-    print("Also stopping the server will also stop SSHX If running!")
+    print("\n")
+    print("Also, stopping the server will also stop SSHX If running!")
     print("Please don't use kill unless It's really hung. If it hung but you were in micro, try using 'poweroff -f'.")
+    print("\n")
     print("\n")
     print("Have fun with your VPS on 5136.cloud.\n")
     print("/ # ")
