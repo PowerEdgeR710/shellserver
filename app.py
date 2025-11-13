@@ -78,8 +78,6 @@ def main():
     chan = client.invoke_shell()
     print("Successfully connected to this VPS(s) shell.")
     interactive_shell(chan)
-    chan.close()
-    client.close()
 
 if __name__ == "__main__":
     main()
