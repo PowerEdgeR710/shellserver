@@ -77,6 +77,7 @@ def main():
         sys.exit(1)
     chan = client.invoke_shell()
     print("Successfully connected to this VPS(s) shell.")
+    print("/ # ")
     interactive_shell(chan)
 
 if __name__ == "__main__":
