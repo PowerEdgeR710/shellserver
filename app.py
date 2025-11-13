@@ -7,7 +7,7 @@ def ensure_package(pkg):
     try:
         return importlib.import_module(pkg)
     except ImportError:
-        print(f"{pkg} not found — installing via pip3...")
+        print(f"{pkg} not found | installing via pip3...")
         subprocess.check_call(["pip3", "install", pkg])
         return importlib.import_module(pkg)
 
@@ -25,12 +25,9 @@ VPS_TOKEN = os.getenv("TOKEN")
 def call_start():
     headers = {"Authorization": VPS_TOKEN}
     try:
-        resp = requests.post(f"{VPS_API_BASE}/manage/start", headers=headers)
-        resp.raise_for_status()
-        print("Starting the VPS.")
-    except Exception as e:
-        print("Failed to start VPS:", e)
-        sys.exit(1)
+        requests.post(f"{VPS_API_BASE}/manage/start", headers=headers)
+    except:
+        pass
 
 def get_ssh_info():
     headers = {"Authorization": VPS_TOKEN}
